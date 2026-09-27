@@ -1,0 +1,27 @@
+[package]
+name = "auto-publisher"
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.89"
+publish = false
+description = "A small self-hosted Discord announcement publisher"
+
+[dependencies]
+dotenvy = "0.15.7"
+futures-util = { version = "0.3", default-features = false, features = ["std"] }
+rustls = { version = "0.23", default-features = false, features = ["ring", "std"] }
+tokio = { version = "1", features = ["macros", "rt", "signal", "time"] }
+twilight-gateway = { version = "0.17.1", default-features = false, features = ["rustls-webpki-roots"] }
+twilight-http = { version = "0.17.1", default-features = false, features = ["rustls-webpki-roots"] }
+twilight-model = "0.17.1"
+
+[dev-dependencies]
+serde_json = "1"
+tokio = { version = "1", features = ["io-util", "net"] }
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
